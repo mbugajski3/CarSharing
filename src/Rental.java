@@ -92,13 +92,17 @@ public class Rental {
         this.vehicle.makeAvailable();
     }
 
-    public double returnFee() {
-        if (actualRentDays > plannedRentDays) {
-            this.totalPrice += 50
-        }
+    public void addReturnPrice(double amount) {
+        this.totalPrice += amount;
     }
 
+    public void setActualRentDays(int actualRentDays) {
+        this.actualRentDays = actualRentDays;
+    }
 
+    public void daysOver(int amount) {
+        this.actualRentDays += amount;
+    }
 
     @Override
     public String toString() {

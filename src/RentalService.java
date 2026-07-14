@@ -46,13 +46,26 @@ public class RentalService {
         if (this.rentalHistory.containsKey(id)) {
             Rental rental = this.rentalHistory.get(id);
 
-            if (rental.getRentStatus().equals("ACTIVE") && actualRentDays > 0 && kilometersDriven > 0) {
+            if (rental.getRentStatus().equals("ACTIVE") &&
+                    actualRentDays > 0 &&
+                    kilometersDriven > 0) {
+
                 rental.rentReturn();
                 rental.getVehicle().addKilometers(kilometersDriven);
-                rental.
-
+                rental.setActualRentDays(actualRentDays);
+                rental.getCustomer().addRentalsEnded();
+                if (actualRentDays > rental.getPlannedRentDays()) {
+                    double price = rental.getVehicle().calculateTotalPrice(rental.getPlannedRentDays());
+                    double overPrice = (actualRentDays - rental.getPlannedRentDays()) * 50;
+                    rental.addReturnPrice(price + overPrice);
+                    return true;
+                } else {
+                    rental.getVehicle().calculateTotalPrice(actualRentDays);
+                    return true;
+                }
             }
         }
+        return false;
     }
 
 }

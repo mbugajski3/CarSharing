@@ -8,8 +8,11 @@ public class Main {
 
         RentalService service = new RentalService();
 
-        service.addRental(1, customer, bike, 20);
+        service.addRental(1, customer, car, 20);
+        System.out.println(car);
+        service.returnRental(1, 30, 100);
         service.rentHistory();
+        System.out.println(car);
 
     }
 }

@@ -70,7 +70,17 @@ public class Customer {
     }
 
     public boolean customerCanRent() {
-        return this.isActive() && this.debt < 500;
+        return this.isActive() && this.debt <= 500;
+    }
+
+    public void addDebt(double debt) {
+        if (debt > 0) {
+            this.debt += debt;
+        }
+    }
+
+    public void addRentalsEnded() {
+        this.rentalsEnded++;
     }
 
     @Override
@@ -80,7 +90,7 @@ public class Customer {
                 this.id +
                 ", email: " +
                 this.email +
-                ", balance: " +
+                ", debt: " +
                 this.debt +
                 ", active: " +
                 this.active +

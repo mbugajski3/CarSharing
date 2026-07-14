@@ -4,10 +4,10 @@ public abstract class Vehicle {
     private String brand;
     private double pricePerDay;
     private boolean available;
-    private double kilometersDriven;
+    private int kilometersDriven;
     private boolean activeInSystem;
 
-    public Vehicle(int id, String brand, double pricePerDay, double kilometersDriven) {
+    public Vehicle(int id, String brand, double pricePerDay, int kilometersDriven) {
         if (id < 0) {
             this.id = 0;
         } else {
@@ -62,7 +62,7 @@ public abstract class Vehicle {
     }
 
     public boolean addKilometers(int kilometers) {
-        if (kilometers > 0) {
+        if (kilometers >= 0) {
             this.kilometersDriven += kilometers;
             return true;
         }
@@ -85,6 +85,7 @@ public abstract class Vehicle {
         this.available = false;
     }
 
+    @Override
     public String toString() {
         return "id: " +
                 this.id +
