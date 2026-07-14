@@ -48,21 +48,61 @@ public class RentalService {
 
             if (rental.getRentStatus().equals("ACTIVE") &&
                     actualRentDays > 0 &&
-                    kilometersDriven > 0) {
+                    kilometersDriven >= 0) {
 
-                rental.rentReturn();
                 rental.getVehicle().addKilometers(kilometersDriven);
                 rental.setActualRentDays(actualRentDays);
                 rental.getCustomer().addRentalsEnded();
+                double price = rental.getVehicle().calculateTotalPrice(actualRentDays);
+                double timeOutFee = 0;
+
+
                 if (actualRentDays > rental.getPlannedRentDays()) {
-                    double price = rental.getVehicle().calculateTotalPrice(rental.getPlannedRentDays());
-                    double overPrice = (actualRentDays - rental.getPlannedRentDays()) * 50;
-                    rental.addReturnPrice(price + overPrice);
+                    timeOutFee += (actualRentDays - rental.getPlannedRentDays()) * 50;
+                    rental.addReturnPrice(price + timeOutFee);
+                    rental.getCustomer().addDebt(price + timeOutFee);
+                    rental.rentReturn();
                     return true;
                 } else {
-                    rental.getVehicle().calculateTotalPrice(actualRentDays);
+                    rental.addReturnPrice(price);
+                    rental.getCustomer().addDebt(price);
+                    rental.rentReturn();
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    public boolean payment(int id, double amount) {
+        if (this.rentalHistory.containsKey(id)) {
+            Rental rental = this.rentalHistory.get(id);
+
+            if (amount > 0 &&
+                rental.getCustomer().getDebt() > 0) {
+                if (amount > rental.getCustomer().getDebt()) {
+                    rental.getCustomer().setDebt(0);
+                    rental.paid();
+                    rental.setTotalPrice(0);
+                    return true;
+                } else {
+                    rental.getCustomer().payDebt(amount);
+                    rental.makePayment(amount);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean cancelRent(int id) {
+        if (this.rentalHistory.containsKey(id)) {
+            Rental rental = this.rentalHistory.get(id);
+
+            if (rental.getRentStatus().equals("ACTIVE")) {
+                rental.setRentStatus("CANCELED");
+                rental.getVehicle().makeAvailable();
+                return true;
             }
         }
         return false;

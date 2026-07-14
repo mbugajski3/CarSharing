@@ -79,6 +79,18 @@ public class Customer {
         }
     }
 
+    public void payDebt(double amount) {
+        if (amount > 0) {
+            this.debt -= amount;
+        }
+    }
+
+    public void setDebt(double amount) {
+        if (amount >= 0) {
+            this.debt = amount;
+        }
+    }
+
     public void addRentalsEnded() {
         this.rentalsEnded++;
     }

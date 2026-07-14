@@ -1,6 +1,6 @@
 public class Scooter extends Vehicle {
 
-    public Scooter(int id, String brand, double pricePerDay, double kilometersDriven) {
+    public Scooter(int id, String brand, double pricePerDay, int kilometersDriven) {
         super(id, brand, pricePerDay, kilometersDriven);
     }
 

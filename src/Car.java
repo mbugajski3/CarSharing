@@ -1,6 +1,6 @@
 public class Car extends Vehicle {
 
-    public Car(int id, String brand, double pricePerDay, double kilometersDriven) {
+    public Car(int id, String brand, double pricePerDay, int kilometersDriven) {
         super(id, brand, pricePerDay, kilometersDriven);
     }
 

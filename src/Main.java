@@ -1,18 +1,34 @@
 public class Main {
-    public static void main() {
-        Customer customer = new Customer("Michał Bugajski", 19203, "michabugajski2@gmail.com", 20 , 12);
-        Vehicle car = new Car(19203, "Ford", 200, 200);
-        Vehicle scooter = new Scooter(11490, "Tesla", 80, 20);
-        Vehicle bike = new Bike(12901, "Romet", 40, 10);
-        Rental rentCar = new Rental(1, customer, car, 20);
+    public static void main(String[] args) {
 
-        RentalService service = new RentalService();
+        Customer customer = new Customer(
+                "Michał",
+                1,
+                "michal@example.com",
+                0,
+                0
+        );
 
-        service.addRental(1, customer, car, 20);
-        System.out.println(car);
-        service.returnRental(1, 30, 100);
-        service.rentHistory();
-        System.out.println(car);
+        Vehicle car = new Car(
+                101,
+                "Toyota Corolla",
+                200,
+                50000
+        );
 
+        RentalService rentalService = new RentalService();
+
+        rentalService.addRental(1, customer, car, 20);
+        rentalService.rentHistory();
+        System.out.println(customer);
+
+
+        rentalService.cancelRent(1);
+
+
+//        rentalService.returnRental(1, 30, 12500);
+//        rentalService.payment(1, 20);
+        rentalService.rentHistory();
+        System.out.println(customer);
     }
 }

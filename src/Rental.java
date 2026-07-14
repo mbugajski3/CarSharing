@@ -62,12 +62,36 @@ public class Rental {
         return this.rentStatus;
     }
 
+    public void setRentStatus(String rentStatus) {
+        this.rentStatus = rentStatus;
+    }
+
     public double getTotalPrice() {
         return this.totalPrice;
     }
 
     public boolean isPaid() {
         return this.paid;
+    }
+
+    public void setTotalPrice(double amount) {
+        if (amount >= 0) {
+            this.totalPrice = amount;
+        }
+    }
+
+    public void paid() {
+        this.paid = true;
+    }
+
+    public void makePayment(double amount) {
+        if (amount > 0) {
+            if (amount > this.totalPrice) {
+                this.totalPrice = 0;
+            } else if (amount < this.totalPrice) {
+                this.totalPrice -= amount;
+            }
+        }
     }
 
     public boolean canRent() {
