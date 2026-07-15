@@ -80,7 +80,7 @@ public class Customer {
     }
 
     public void payDebt(double amount) {
-        if (amount > 0) {
+        if (amount > 0 && this.debt > 0) {
             this.debt -= amount;
         }
     }
