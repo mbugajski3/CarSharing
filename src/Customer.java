@@ -77,12 +77,23 @@ public class Customer {
         if (debt > 0) {
             this.debt += debt;
         }
+        if (this.debt < 0) {
+            this.debt = 0;
+        }
     }
 
-    public void payDebt(double amount) {
-        if (amount > 0 && this.debt > 0) {
-            this.debt -= amount;
+    public boolean payDebt(double amount) {
+        if (amount <= 0 || this.debt <= 0) {
+            return false;
         }
+
+        this.debt -= amount;
+
+        if (this.debt < 0) {
+            this.debt = 0;
+        }
+
+        return true;
     }
 
     public void setDebt(double amount) {

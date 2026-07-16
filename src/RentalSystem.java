@@ -82,9 +82,14 @@ public class RentalSystem {
 
         if (customer == null) {
             return false;
-        } else {
-            customer.payDebt(amount);
-            return true;
         }
+
+        return customer.payDebt(amount);
+    }
+
+    public void printRentals() {
+        service.getRentalHistory();
+
+        this.service.rentHistory();
     }
 }

@@ -74,27 +74,6 @@ public class RentalService {
         return false;
     }
 
-    public boolean payment(int id, double amount) {
-        if (this.rentalHistory.containsKey(id)) {
-            Rental rental = this.rentalHistory.get(id);
-
-            if (amount > 0 &&
-                rental.getCustomer().getDebt() > 0) {
-                if (amount > rental.getCustomer().getDebt()) {
-                    rental.getCustomer().setDebt(0);
-                    rental.paid();
-                    rental.setTotalPrice(0);
-                    return true;
-                } else {
-                    rental.getCustomer().payDebt(amount);
-                    rental.makePayment(amount);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public boolean cancelRent(int id) {
         if (this.rentalHistory.containsKey(id)) {
             Rental rental = this.rentalHistory.get(id);
